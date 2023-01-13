@@ -29,8 +29,12 @@ spec:
         ports:
         - containerPort: 3000
           name: website
-      tolerations:
-      - effect: NoSchedule
-        key: gitops
-        operator: Equal
-        value: "true"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: gitops
+                operator: In
+                values:
+                - true
